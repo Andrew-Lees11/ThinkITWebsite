@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html> 
+<html>
+<title>ThinkIT Website</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -8,59 +9,59 @@
 body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 .w3-bar-block .w3-bar-item {padding:20px}
 .wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-gap: 10px;
 }
 
 .navbar {
-  overflow: hidden;
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  width: 100%;
+overflow: hidden;
+background-color: #333;
+position: fixed;
+top: 0;
+width: 100%;
 }
 
 .navbar a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 15px 15px;
-  text-decoration: none;
-  font-size: 19px;
+float: left;
+display: block;
+color: #f2f2f2;
+text-align: center;
+padding: 15px 15px;
+text-decoration: none;
+font-size: 19px;
 }
 
 .navbar a:hover {
-  background: #ddd;
-  color: black;
+background: #ddd;
+color: black;
 }
 
 button {
-  background-color: #66dab9;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition-duration: 0.4s;
-  cursor: pointer;
+background-color: #66dab9;
+border: none;
+color: white;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+transition-duration: 0.4s;
+cursor: pointer;
 }
 
 button:hover {
-  background-color: white;
-  color: black;
-  border: 2px solid #66dab9;
+background-color: white;
+color: black;
+border: 2px solid #66dab9;
 }
 
 .title {
-  text-align: right;
+text-align: center;
 }
 
 .description {
-  text-align: left;
+text-align: left;
 }
 
 </style>
@@ -68,49 +69,76 @@ button:hover {
 
 <!-- Top menu -->
 <div class="navbar">
-  <a href="/">Home</a>
-  <a href="/scores">Scores</a>
-  <a href="/donators">Donations</a>
-  <a href="/donate">How to donate</a>
-  <a href="/example">Example</a>
-  <a href="/help">Help</a>
+<a href="/">Home</a>
+<a href="/scores">Scores</a>
+<a href="/donators">Donations</a>
+<a href="/donate">How to donate</a>
+<a href="/example">Example</a>
+<a href="/help">Help</a>
 </div>
 
 <!-- About Section -->
 <div class="w3-container w3-padding-32 w3-center">
-  <br>
-  <div class="title">
-  <h1>Forget me not<H1>
-  <h2>Find That Feeling!<h2>
-    <!-- the title -->
+<br>
+<div class="title">
+  <h1>Forget me not</h1>
+</div>
+
+<div class="w3-container">
+  <div class="w3-half">
+    <img src="images/Rosalind%20Franklin/flowerlogo.png" width="300" height="300">
   </div>
 
-  <div class="w3-container">
-    <div class="w3-half">
-      <!-- the logo image -->
-	  <img src="images/Rosalind%20Franklin/flowerlogo.png" width="300" height="300">
-	  
-    </div>
+  <div class="w3-half description">
+    <h2>Find That Feeling!</h2>
 
-    <div class="w3-half description">
-      <!-- the description -->
-    </div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris est lectus, pharetra non commodo sit amet, pulvinar ut nulla. Pellentesque vitae mi mauris. Curabitur tempus dui ac fermentum pellentesque. Sed eros libero, congue vel ornare a, gravida sed erat. Quisque bibendum ultrices magna pharetra aliquet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus finibus volutpat ullamcorper. Sed sed nunc eget magna commodo maximus id a est. Ut a risus turpis. Proin lacinia luctus consequat.</p>
+
+    <br>
+    <p>To see raised donations click the button bellow:</p>
+    <a href="/scores" class="w3-btn w3-black">Scores Link</a>
+    <button onclick="location.href='/scores'" type="button">Scores Button</button>
   </div>
+</div>
 
-  <br>
-  <br>
+<br>
+<br>
 
-  <div class="w3-third w3-container">
-    <!-- the £50 Twitter widget -->
-  </div>
+<div class="w3-third w3-container">
+  <p>Donate £50 Twitter link widget</p>
 
-  <div class="w3-third w3-container">
-    <!-- the £100 Twitter widget -->
-  </div>
+  <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+  <a class="twitter-share-button"
+    href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A350"
+    data-size="large"
+    data-url="a"
+    >
+  Tweet</a>
+</div>
 
-  <div class="w3-third w3-container">
-    <!-- the £200 Twitter widget -->
-  </div>
+<div class="w3-third w3-container">
+  <p>Donate £100 Twitter link widget</p>
+
+  <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+  <a class="twitter-share-button w3-third"
+    href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3100"
+    data-size="large"
+    data-url="a"
+    >
+  Tweet</a>
+</div>
+
+<div class="w3-third w3-container">
+  <p>Donate £200 Twitter link widget</p>
+
+  <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+  <a class="twitter-share-button"
+    href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3200"
+    data-size="large"
+    data-url="a"
+    >
+  Tweet</a>
+</div>
 </div>
 
 </body>
