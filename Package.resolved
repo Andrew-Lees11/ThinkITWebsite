@@ -119,12 +119,39 @@
         }
       },
       {
+        "package": "Kitura-Credentials",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-Credentials.git",
+        "state": {
+          "branch": null,
+          "revision": "7fb7dc7b406a6c5702ccf851d6d0f2e1d8896786",
+          "version": "2.3.0"
+        }
+      },
+      {
+        "package": "Kitura-CredentialsHTTP",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-CredentialsHTTP.git",
+        "state": {
+          "branch": null,
+          "revision": "cb3445b83c4437e8e53b9c03fdd2a79710219472",
+          "version": "2.1.0"
+        }
+      },
+      {
         "package": "Kitura-net",
         "repositoryURL": "https://github.com/IBM-Swift/Kitura-net.git",
         "state": {
           "branch": null,
           "revision": "755c39febb661d5da85e1ec9fcf98721c420af0a",
           "version": "2.1.0"
+        }
+      },
+      {
+        "package": "Kitura-Session",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-Session.git",
+        "state": {
+          "branch": null,
+          "revision": "8d60bc0389540446d68a057517a5dd20b151505d",
+          "version": "3.2.0"
         }
       },
       {

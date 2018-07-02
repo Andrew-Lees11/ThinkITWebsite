@@ -51,30 +51,19 @@ public class App {
             print(error)
         }
         router.post("/input", handler: donationHandler)
+        router.post("/authinput", handler: authDonationHandler)
         router.get("/toggle", handler: toggleHandler)
         router.get("/scores") { request, response, next in
             guard !hideScores else {
                 try response.render("hide.stencil", context: [:])
                 return next()
             }
-            var teamScores = [String: Double]()
             Donation.findAll { donations, error in
                 guard let donations = donations else {
+                    self.renderDonations(response: response, donations: donationList)
                     return next()
                 }
-                for donation in donations {
-                    teamScores[donation.team] = donation.amount + (teamScores[donation.team] ?? 0)
-                }
-                var context: [String: [[String:Any]]] = ["donations" :[]]
-                for team in teams {
-                    context["donations"]?.append(["team": team, "amount": String(teamScores[team] ?? 0)])
-                }
-                print("scores context: \(context)")
-                do {
-                    try response.render("scores.stencil", context: context)
-                } catch {
-                    print("failed to render stencil")
-                }
+                self.renderDonations(response: response, donations: donations)
                 next()
             }
         }
@@ -151,29 +140,62 @@ public class App {
 
     func donationHandler(donation: Donation, completion: @escaping (DonationMessage?, RequestError?) -> Void) {
         print("recieved donation: \(donation)")
-        Donation.findAll() { allDonations, error in
-            let existingUser = allDonations?.filter({$0.username == donation.username})
-            let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
-            if noLimit || donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
-                print("saved full donation: \(donation)")
-                donation.save({ (donation, error) in
-                    guard let donation = donation else {
-                        return completion(nil, error)
-                    }
-                    return completion(DonationMessage(donation: donation), nil)
-                })
-            } else if totalDonations < userCap {
-                let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
-                print("saved partial donation: \(adjustedDonation)")
-                adjustedDonation.save({ (donation, error) in
-                    guard let donation = donation else {
-                        return completion(nil, error)
-                    }
-                    return completion(DonationMessage(donation: donation), nil)
-                })
-            } else {
-                print("Donator out of money: \(donation)")
-                completion(DonationMessage(message: "Failed! Donator has no more funds."), nil)
+        if testing {
+            Donation.findAll() { allDonations, error in
+                let existingUser = allDonations?.filter({$0.username == donation.username})
+                let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
+                if testing || donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
+                    print("saved full donation: \(donation)")
+                    donation.save({ (donation, error) in
+                        guard let donation = donation else {
+                            return completion(nil, error)
+                        }
+                        return completion(DonationMessage(donation: donation), nil)
+                    })
+                } else if totalDonations < userCap {
+                    let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
+                    print("saved partial donation: \(adjustedDonation)")
+                    adjustedDonation.save({ (donation, error) in
+                        guard let donation = donation else {
+                            return completion(nil, error)
+                        }
+                        return completion(DonationMessage(donation: donation), nil)
+                    })
+                } else {
+                    print("Donator out of money: \(donation)")
+                    completion(DonationMessage(message: "Failed! Donator has no more funds."), nil)
+                }
+            }
+        }
+    }
+    
+    func authDonationHandler(auth: MyBasicAuth, donation: Donation, completion: @escaping (DonationMessage?, RequestError?) -> Void) {
+        if !testing {
+            print("recieved donation: \(donation) from \(donation.username)")
+            Donation.findAll() { allDonations, error in
+                let existingUser = allDonations?.filter({$0.username == donation.username})
+                let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
+                if donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
+                    print("saved full donation: \(donation)")
+                    donation.save({ (donation, error) in
+                        guard let donation = donation else {
+                            return completion(nil, error)
+                        }
+                        return completion(DonationMessage(donation: donation), nil)
+                    })
+                } else if totalDonations < userCap {
+                    let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
+                    print("saved partial donation: \(adjustedDonation)")
+                    adjustedDonation.save({ (donation, error) in
+                        guard let donation = donation else {
+                            return completion(nil, error)
+                        }
+                        return completion(DonationMessage(donation: donation), nil)
+                    })
+                } else {
+                    print("Donator out of money: \(donation)")
+                    completion(DonationMessage(message: "Failed! Donator has no more funds."), nil)
+                }
             }
         }
     }
@@ -184,11 +206,28 @@ public class App {
                 hideScores = hide
             }
             if let newLimit = toggle.nolimit {
-                noLimit = newLimit
+                testing = newLimit
             }
             completion(toggle, nil)
         } else {
             completion(nil, .unauthorized)
+        }
+    }
+    
+    func renderDonations(response: RouterResponse, donations: [Donation]) {
+        var teamScores = [String: Double]()
+        for donation in donations {
+            teamScores[donation.team] = donation.amount + (teamScores[donation.team] ?? 0)
+        }
+        var context: [String: [[String:Any]]] = ["donations" :[]]
+        for team in teams {
+            context["donations"]?.append(["team": team, "amount": String(teamScores[team] ?? 0)])
+        }
+        print("scores context: \(context)")
+        do {
+            try response.render("scores.stencil", context: context)
+        } catch {
+            print("failed to render stencil")
         }
     }
     
