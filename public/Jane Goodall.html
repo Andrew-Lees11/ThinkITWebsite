@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>ThinkIT Website</title>
+<title>Helping Hands</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -38,7 +38,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 }
 
 button {
-  background-color: #66dab9;
+  background-color: #9b67db;
   border: none;
   color: white;
   padding: 8px 16px;
@@ -57,7 +57,7 @@ button:hover {
 }
 
 .title {
-  text-align: right;
+  text-align: center;
 }
 
 .description {
@@ -82,17 +82,27 @@ button:hover {
   <br>
   <div class="title">
     <!-- the title -->
+    <h1>Helping Hands</h1>
   </div>
 
   <div class="w3-container">
     <div class="w3-half">
       <!-- the logo image -->
 	  <img src="images/Jane%20Goodall/HH.jpeg" width="300" height="300">
-	  <img src="./images/HH.jp
+      <p>To see raised donations click the button bellow:</p>
+      <a href="/scores" class="w3-btn w3-black">Scores Link</a>
+      <button onclick="location.href='/scores'" type="button">Scores Button</button>
     </div>
 
     <div class="w3-half description">
       <!-- the description -->
+      <h1>About our product</h1>
+      <p style=font-size:20px>
+      Helping hands can be used inside or outside for cleaning or even in the field just by the simple press of a button or some keys.</p>
+      <p style=font-size:20px> These solar powered robots come with a charger in case there’s no sun out.</p>
+      <p style=font-size:20px> They’re all made out of recycled metals and are shipped in pairs with spare parts and as a bonus doesn’t make a noise.</p>
+      <p style=font-size:20px> It can hold 500kg  and you can get it in gold or silver.</p>
+      <br>
     </div>
   </div>
 
@@ -100,17 +110,41 @@ button:hover {
   <br>
 
   <div class="w3-third w3-container">
-    <!-- the £50 Twitter widget -->
+    <p>Donate £50 Twitter link widget</p>
+
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A350"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
   </div>
 
   <div class="w3-third w3-container">
-    <!-- the £100 Twitter widget -->
+    <p>Donate £100 Twitter link widget</p>
+
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button w3-third"
+      href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3100"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
   </div>
 
   <div class="w3-third w3-container">
-    <!-- the £200 Twitter widget -->
-  </div>
-</div>
+    <p>Donate £200 Twitter link widget</p>
 
-</body>
-</html>
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <a class="twitter-share-button"
+      href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3200"
+      data-size="large"
+      data-url="a"
+      >
+    Tweet</a>
+  </div>
+  </div>
+
+  </body>
+  </html>
