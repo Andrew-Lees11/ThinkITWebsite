@@ -1,137 +1,148 @@
 <!DOCTYPE html>
-<html>
-<title>ThinkIT Website</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-}
+ <html>
+ <title>ThinkIT Website</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+ <style>
+ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+ .w3-bar-block .w3-bar-item {padding:20px}
+ .wrapper {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-gap: 10px;
+ }
 
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
+ .navbar {
+   overflow: hidden;
+   background-color: #333;
+   position: fixed;
+   top: 0;
+   width: 100%;
+ }
 
-.navbar a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 15px 15px;
-  text-decoration: none;
-  font-size: 19px;
-}
+ .navbar a {
+   float: left;
+   display: block;
+   color: #f2f2f2;
+   text-align: center;
+   padding: 15px 15px;
+   text-decoration: none;
+   font-size: 19px;
+ }
 
-.navbar a:hover {
-  background: #ddd;
-  color: black;
-}
+ .navbar a:hover {
+   background: #ddd;
+   color: black;
+ }
 
-button {
-  background-color: #66dab9;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
+ button {
+   background-color: #66dab9;
+   border: none;
+   color: white;
+   padding: 8px 16px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   transition-duration: 0.4s;
+   cursor: pointer;
+ }
 
-button:hover {
-  background-color: white;
-  color: black;
-  border: 2px solid #66dab9;
-}
+ button:hover {
+   background-color: white;
+   color: black;
+   border: 2px solid #66dab9;
+ }
 
-.title {
-  text-align: right;
-}
+ .title {
+   text-align: center;
+ }
 
-.description {
-  text-align: left;
-}
+ .description {
+   text-align: left;
+ }
 
-</style>
-<body>
+ </style>
+ <body>
 
-<!-- Top menu -->
-<div class="navbar">
-  <a href="/">Home</a>
-  <a href="/scores">Scores</a>
-  <a href="/donators">Donations</a>
-  <a href="/donate">How to donate</a>
-  <a href="/example">Example</a>
-  <a href="/help">Help</a>
-</div>
+ <!-- Top menu -->
+ <div class="navbar">
+   <a href="/">Home</a>
+   <a href="/scores">Scores</a>
+   <a href="/donators">Donations</a>
+   <a href="/donate">How to donate</a>
+   <a href="/example">Example</a>
+   <a href="/help">Help</a>
+ </div>
 
-<!-- About Section -->
-<div class="w3-container w3-padding-32 w3-center">
-  <br>
-  <div class="title">
-    <!-- the title -->
-  </div>
+ <!-- About Section -->
+ <div class="w3-container w3-padding-32 w3-center">
+   <br>
+   <div class="title">
+     <h1 style="color:blue; text-align: center; font-size: 60px"> Smart life</h1>
+   </div>
 
-  <div class="w3-container">
-    <div class="w3-half">
-      <!-- the logo image -->
-	  <img src="images/Ada%20Lovelace/SL logo.png" width="300" height="300">
-    </div>
-	
-	<div class="w3-half description">
-      <!-- The price -->
-		<h4>House lights: £19.99</h4>
-	   <h4>The wirstband which connects with the doorbell is:£29.99</h4>
-	   <h4>The fridge is: £699.99 but is currently reduced to: £349.99</h4>
-	   <h4>The app itself is £14.99 but if you pay £1.99 more you get a braille keyboard!</h4>
-	   <h4>There is currently a bundle which consists of the lights and the doorbell/wristband for £39.99!</h4>
-	   <h4>Also you can recieve 25% off through the NHS.</h4>
-	  <br>
-	  <p> 
-    </div>
+   <div class="w3-container">
+     <div class="w3-half">
+       <img src="images/Ada%20Lovelace/SL%20logo.png" width="300" height="300">
+       <p>To see raised donations click the button bellow:</p>
+       <a href="/scores" class="w3-btn w3-black">Scores Link</a>
+       <button onclick="location.href='/scores'" type="button">Scores Button</button>
+     </div>
 
-	<div class="w3-half description">
-      <!-- The slogan -->
-	<h2>Live the smart life!</h2>
-	  <br>
-	  <p> 
-    </div>
-	
-    <div class="w3-half description">
-      <!-- the description -->
-	  <br>
-	  <h2>
-	  <p> 
-    </div>
-  </div>
+     <div class="w3-half description">
+       <h2>Live the smart life!</h2>
+       <p> To help thousands of disabled adults, young and old, live their life more freely and independently.<br> Our app conveniently tailors to your nutritional needs and orders and delivers food and medicine direct to your house.<br> Also, our smart app uses intelligent voice recognition and connects to our Bluetooth brail keyboard, making it easy for visually impaired people to type.</p>
+       <h6>House lights: £19.99</h6>
+       <h6>The wirstband which connects with the doorbell is:£29.99</h6>
+       <h>The fridge is: £699.99 but is currently reduced to: £349.99</h>
+       <h>The app itself is £14.99 but if you pay £1.99 more you get a braille keyboard!</h>
+       <h>There is currently a bundle which consists of the lights and the doorbell/wristband for £39.99!</h>
+       <h>Also you can recieve 25% off through the NHS.</h>
+     </div>
+   </div>
 
-  <br>
-  <br>
+   <br>
+   <br>
 
-  <div class="w3-third w3-container">
-    <!-- the £50 Twitter widget -->
-  </div>
+   <div class="w3-third w3-container">
+     <p>Donate £50 Twitter link widget</p>
 
-  <div class="w3-third w3-container">
-    <!-- the £100 Twitter widget -->
-  </div>
+     <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+     <a class="twitter-share-button"
+       href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A350"
+       data-size="large"
+       data-url="a"
+       >
+     Tweet</a>
+   </div>
 
-  <div class="w3-third w3-container">
-    <!-- the £200 Twitter widget -->
-  </div>
-</div>
+   <div class="w3-third w3-container">
+     <p>Donate £100 Twitter link widget</p>
 
-</body>
-</html>
+     <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+     <a class="twitter-share-button w3-third"
+       href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3100"
+       data-size="large"
+       data-url="a"
+       >
+     Tweet</a>
+   </div>
+
+   <div class="w3-third w3-container">
+     <p>Donate £200 Twitter link widget</p>
+
+     <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+     <a class="twitter-share-button"
+       href="https://twitter.com/intent/tweet?text=@ThinkITHursley%20%23voteteamname%20Donate%20%C2%A3200"
+       data-size="large"
+       data-url="a"
+       >
+     Tweet</a>
+   </div>
+ </div>
+
+ </body>
+ </html>
