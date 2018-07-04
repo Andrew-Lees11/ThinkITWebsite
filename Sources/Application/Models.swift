@@ -34,6 +34,7 @@ struct ToggleQuery: QueryParams, Codable {
     let token: String
     let hide: Bool?
     let nolimit: Bool?
+    let clear: Bool?
 }
 
 public struct MyBasicAuth: TypeSafeHTTPBasic {
@@ -58,6 +59,6 @@ let teams: [String] = ["Ada Lovelace", "Elizabeth Blackwell", "Grace Hopper", "J
 let userCap: Double = 1000
 let unlimitedUser: String? = ProcessInfo.processInfo.environment["unlimitedUser"]
 var hideScores: Bool = false
-var testing: Bool = true
+var testing: Bool = false
 var donationList: [Donation] = []
 

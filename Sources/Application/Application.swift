@@ -58,32 +58,39 @@ public class App {
                 try response.render("hide.stencil", context: [:])
                 return next()
             }
-            Donation.findAll { donations, error in
-                guard let donations = donations else {
+            if donationList.isEmpty {
+                Donation.findAll { donations, error in
+                    guard let donations = donations else {
+                        return
+                    }
+                    donationList = donations
                     self.renderDonations(response: response, donations: donationList)
                     return next()
                 }
-                self.renderDonations(response: response, donations: donations)
-                next()
+            } else {
+                self.renderDonations(response: response, donations: donationList)
+                return next()
             }
         }
         
         router.get("/alldonations") { request, response, next in
-            Donation.findAll { donations, error in
-                guard let donations = donations else {
-                    return next()
-                }
-                var context: [String: [[String:Any]]] = ["donations": []]
-                for donation in donations {
-                    context["donations"]?.append(["team": donation.team, "user": donation.username, "amount": donation.amount])
-                }
-                do {
-                    try response.render("alldonations.stencil", context: context)
-                } catch {
-                    print("failed to render alldonations stencil")
-                }
-                next()
+            var context: [String: [[String:Any]]] = ["donations": []]
+            for donation in donationList {
+                context["donations"]?.append(["team": donation.team, "user": donation.username, "amount": donation.amount])
             }
+            var teamScores = [String: Double]()
+            for donation in donationList {
+                teamScores[donation.team] = donation.amount + (teamScores[donation.team] ?? 0)
+            }
+            for team in teams {
+                context["donations"]?.append(["team": team, "user": "ScoresTotal", "amount": String(teamScores[team] ?? 0)])
+            }
+            do {
+                try response.render("alldonations.stencil", context: context)
+            } catch {
+                print("failed to render alldonations stencil")
+            }
+            next()
         }
 
         router.get("/") { request, response, next in
@@ -104,36 +111,28 @@ public class App {
             }
             let requestDonator = "tweets/\(donatorName)"
             var donator = Donator(username: requestDonator, donations: [:])
-            Donation.findAll { donations, error in
-                guard let donations = donations else {
-                    return next()
+            var totalDonations: Double = 0
+            for donation in donationList {
+                if donation.username.lowercased() == requestDonator {
+                    donator.donations[donation.team] = donation.amount + (donator.donations[donation.team] ?? 0)
+                    totalDonations = totalDonations + donation.amount
                 }
-                print("donations: \(donations)")
-                var totalDonations: Double = 0
-                for donation in donations {
-                    if donation.username.lowercased() == requestDonator {
-                        donator.donations[donation.team] = donation.amount + (donator.donations[donation.team] ?? 0)
-                        totalDonations = totalDonations + donation.amount
-                    }
-                }
-                print("donator.donations[donation.team]: \(donator.donations)")
-                print("requestDonator: \(requestDonator)")
-                var context: [String:Any] = ["donator": donatorName]
-                print("context: \(context)")
-                var tempTeams: [[String:Any]] = []
-                for (index, team) in teams.enumerated() {
-                    tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0, "index": index])
-                }
-                context["teams"] = tempTeams
-                context["totalDonations"] = totalDonations
-                print("donator context: \(context)")
-                do {
-                    try response.render("donator.stencil", context: context)
-                } catch {
-                    print("failed to render stencil")
-                }
-                next()
             }
+            var context: [String:Any] = ["donator": donatorName]
+            print("context: \(context)")
+            var tempTeams: [[String:Any]] = []
+            for (index, team) in teams.enumerated() {
+                tempTeams.append(["team": team, "amount": donator.donations[team] ?? 0, "index": index])
+            }
+            context["teams"] = tempTeams
+            context["totalDonations"] = totalDonations
+            print("donator context: \(context)")
+            do {
+                try response.render("donator.stencil", context: context)
+            } catch {
+                print("failed to render stencil")
+            }
+            next()
         }
 
     }
@@ -141,37 +140,31 @@ public class App {
     func donationHandler(donation: Donation, completion: @escaping (DonationMessage?, RequestError?) -> Void) {
         print("recieved donation: \(donation)")
         if testing {
-            Donation.findAll() { allDonations, error in
-                let existingUser = allDonations?.filter({$0.username == donation.username})
-                let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
-                if testing || donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
-                    print("saved full donation: \(donation)")
-                    donation.save({ (donation, error) in
-                        guard let donation = donation else {
-                            return completion(nil, error)
-                        }
-                        return completion(DonationMessage(donation: donation), nil)
-                    })
-                } else if totalDonations < userCap {
-                    let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
-                    print("saved partial donation: \(adjustedDonation)")
-                    adjustedDonation.save({ (donation, error) in
-                        guard let donation = donation else {
-                            return completion(nil, error)
-                        }
-                        return completion(DonationMessage(donation: donation), nil)
-                    })
-                } else {
-                    print("Donator out of money: \(donation)")
-                    completion(DonationMessage(message: "Failed! Donator has no more funds."), nil)
+            donationList.append(donation)
+            donation.save({ (donation, error) in
+                guard let donation = donation else {
+                    return completion(nil, error)
                 }
-            }
+                return completion(DonationMessage(donation: donation), nil)
+            })
         }
     }
     
     func authDonationHandler(auth: MyBasicAuth, donation: Donation, completion: @escaping (DonationMessage?, RequestError?) -> Void) {
         if !testing {
             print("recieved donation: \(donation) from \(donation.username)")
+            if donationList.isEmpty {
+                
+            } else {
+                let existingUser = donationList.filter({$0.username == donation.username})
+                let totalDonations = existingUser.map({ $0.amount }).reduce(0, +)
+                if donation.username == unlimitedUser || totalDonations + donation.amount <= userCap {
+                    donationList.append(donation)
+                } else if totalDonations < userCap {
+                    let adjustedDonation = Donation(username: donation.username, team: donation.team, amount: userCap - totalDonations)
+                    donationList.append(adjustedDonation)
+                }
+            }
             Donation.findAll() { allDonations, error in
                 let existingUser = allDonations?.filter({$0.username == donation.username})
                 let totalDonations = existingUser?.map({ $0.amount }).reduce(0, +) ?? 0
@@ -208,6 +201,9 @@ public class App {
             if let newLimit = toggle.nolimit {
                 testing = newLimit
             }
+            if toggle.clear == true {
+                donationList = []
+            }
             completion(toggle, nil)
         } else {
             completion(nil, .unauthorized)
@@ -230,7 +226,6 @@ public class App {
             print("failed to render stencil")
         }
     }
-    
 
     public func run() throws {
         try postInit()
